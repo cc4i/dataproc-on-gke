@@ -1,0 +1,28 @@
+virtualClusterConfig:
+  auxiliaryServicesConfig:
+    sparkHistoryServerConfig:
+      dataprocCluster: projects/play-with-anthos-340801/regions/us-central1/clusters/phs-server4dp-gpm
+  kubernetesClusterConfig:
+    gkeClusterConfig:
+      gkeClusterTarget: projects/play-with-anthos-340801/locations/us-central1-c/clusters/dataproc-gke-gpm
+      nodePoolTarget:
+      - nodePool: projects/play-with-anthos-340801/locations/us-central1-c/clusters/dataproc-gke-gpm/nodePools/dp-noodpool2
+        roles:
+        - DEFAULT
+    kubernetesNamespace: dp-gpm2
+    kubernetesSoftwareConfig:
+      componentVersion:
+        SPARK: 3.1-dataproc-7
+      properties:
+        spark:spark.driver.extraJavaOptions: -javaagent:/opt/spark/jars/jmx_prometheus_javaagent-0.17.0.jar=9091:/usr/lib/spark/conf/prometheus-config.yml
+        spark:spark.eventLog.dir: gs://cc-gcs-to-dataproc/phs/spark-job-history
+        spark:spark.eventLog.enabled: 'true'
+        spark:spark.executor.extraJavaOptions: -javaagent:/opt/spark/jars/jmx_prometheus_javaagent-0.17.0.jar=9091:/usr/lib/spark/conf/prometheus-config.yml
+        spark:spark.kubernetes.container.image: us-central1-docker.pkg.dev/play-with-anthos-340801/jigaree/dataproc-test:latest
+        spark:spark.metrics.conf.*.sink.jmx.class: org.apache.spark.metrics.sink.JmxSink
+        spark:spark.metrics.conf.driver.source.jvm.class: org.apache.spark.metrics.source.JvmSource
+        spark:spark.metrics.conf.executor.source.jvm.class: org.apache.spark.metrics.source.JvmSource
+        spark:spark.metrics.conf.master.source.jvm.class: org.apache.spark.metrics.source.JvmSource
+        spark:spark.metrics.conf.worker.source.jvm.class: org.apache.spark.metrics.source.JvmSource
+        spark:spark.ui.prometheus.enabled: 'true'
+  stagingBucket: cc-gcs-to-dataproc
