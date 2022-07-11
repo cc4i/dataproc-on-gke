@@ -59,5 +59,5 @@ gcloud dataproc clusters gke create ${DP_CLUSTER} \
 
 
 # Apply PodMonitoring to collect driver/executor metrics
-kubectl apply -f podmonitoring.yaml -n ${DP_CLUSTER}
+kubectl apply -f manifests/podmonitoring.yaml -n ${DP_CLUSTER}
 
