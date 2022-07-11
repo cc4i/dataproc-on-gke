@@ -58,12 +58,37 @@ gcloud dataproc clusters gke create ${DP_CLUSTER} \
 
 ### 2. Submit a Job
 ```sh
-#
+cd hack && ./env.sh
+gcloud dataproc jobs submit spark \
+    --region=${REGION} \
+    --cluster=${DP_CLUSTER} \
+    --properties="spark.app.name=SparkPi,spark.dynamicAllocation.maxExecutors=5" \
+    --class=org.apache.spark.examples.SparkPi \
+    --jars=../examples/spark-examples_2.12-3.1.3.jar \
+    -- 200000
+
 ```
 
 ### 3. Monitoring driver & executor with JmxSink
 ```sh
-#
+cd hack
+# Provision GKE cluster if don't have a right one
+./gke.sh
+# Provision Dataproc cluster on top of GKE
+./dp-gmp.sh 
+
+gcloud dataproc jobs submit spark \
+    --region=${REGION} \
+    --cluster=${DP_CLUSTER} \
+    --properties="spark.app.name=SparkPi,spark.dynamicAllocation.maxExecutors=5" \
+    --class=org.apache.spark.examples.SparkPi \
+    --jars=../examples/spark-examples_2.12-3.1.3.jar \
+    -- 100000
+
+# Validate metrics with Prometheus UI
+kubectl -n gmp-test port-forward svc/frontend 9090
+# Brwose http://localhost:9090/
+
 ```
 
 ### 4. Monitoring driver & executor with PrometheusServlet
