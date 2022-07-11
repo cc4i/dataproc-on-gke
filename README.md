@@ -28,18 +28,18 @@ gcloud dataproc clusters gke create ${DP_CLUSTER} \
 ```
 
 
--2.2 Create seperate service account for controller, driver and executor.
+- 2.2 Create seperate service account for controller, driver and executor.
 
--2.3 Create different Dataproc cluster on the same GKE when your Spark jobs need different resource, such as high memory, GPU, etc.
+- 2.3 Create different Dataproc cluster on the same GKE when your Spark jobs need different resource, such as high memory, GPU, etc.
 
--2.4 Attach persistent histoy server to collect job related information and get better insight of detail. 
+- 2.4 Attach persistent histoy server to collect job related information and get better insight of detail. 
 
--2.5 [Build and specify the custom image](https://cloud.google.com/dataproc/docs/guides/dpgke/dataproc-gke-custom-images#custom_container_image_requirements_and_settings) if need additional jars or configuration.  
+- 2.5 [Build and specify the custom image](https://cloud.google.com/dataproc/docs/guides/dpgke/dataproc-gke-custom-images#custom_container_image_requirements_and_settings) if need additional jars or configuration.  
 
 
--2.6 Each SparkContext launches a [Web UI](https://spark.apache.org/docs/latest/web-ui.html), by default on port 4040, that displays useful information about the application. We can use port-forward through kubectl to access web/api through browser. 
+- 2.6 Each SparkContext launches a [Web UI](https://spark.apache.org/docs/latest/web-ui.html), by default on port 4040, that displays useful information about the application. We can use port-forward through kubectl to access web/api through browser. 
 
--2.7 We do have serveral options for monitoring dirver and executor in order to get realtime information of jobs.
+- 2.7 We do have serveral options for monitoring dirver and executor in order to get realtime information of jobs.
 
 >logs - has been sent to Cloud Logging.
 
@@ -48,6 +48,7 @@ gcloud dataproc clusters gke create ${DP_CLUSTER} \
 ## Submit Spark Job
 
 ## Hands-on Lab
+
 ### 1. Provision Dataproc on GKE
 ```sh
 #
@@ -63,7 +64,7 @@ gcloud dataproc clusters gke create ${DP_CLUSTER} \
 #
 ```
 
-### 4. Monitoring driver & executor with JmxSink
+### 4. Monitoring driver & executor with PrometheusServlet
 ```sh
 #
 ```
