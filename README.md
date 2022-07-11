@@ -41,6 +41,8 @@ gcloud dataproc clusters gke create ${DP_CLUSTER} \
 
 - 2.7 We do have serveral options for monitoring dirver and executor in order to get realtime information of jobs.
 
+- 2.8 Using different [Kubenetes volumes](https://spark.apache.org/docs/latest/running-on-kubernetes.html#using-kubernetes-volumes) for various cases, such as local SSD to spill data during shuffle for better performance, dynaimc allocation per executor, etc.
+
 >logs - has been sent to Cloud Logging.
 
 >metrics - can be monitoring by Cloud Monitoring, or choose different [Spark metrics providers](https://spark.apache.org/docs/latest/monitoring.html#metrics), such as JmxSink, PrometheusServlet, GraphiteSink, etc.

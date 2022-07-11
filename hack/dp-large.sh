@@ -42,7 +42,7 @@ cd -
 # >2. Attach history server.
 # >3. Provision seperate node pools for controller, driver and executor into same zone for high performance.
 # >4. Create different service account for controller, driver and executor
-# >
+# >5. Using local storage to spill data during shuffle
 
 gcloud dataproc clusters gke create ${CLUSTER_NAME} \
   --region=${REGION} \
@@ -66,7 +66,7 @@ gcloud dataproc clusters gke create ${CLUSTER_NAME} \
   --pools="name=${DP_POOLNAME},roles=default" \
   --pools="name=${DP_CTRL_POOLNAME},roles=default,machineType=${VM_TYPE}" \
   --pools="name=${DP_DRIVER_POOLNAME},min=1,max=3,roles=spark-driver,machineType=${VM_TYPE}" \
-  --pools="name=${DP_EXEC_POOLNAME},min=1,max=10,roles=spark-executor,machineType=${VM_TYPE}" \
+  --pools="name=${DP_EXEC_POOLNAME},min=1,max=10,roles=spark-executor,machineType=${VM_TYPE},localSsdCount=2" \
   --properties="dataproc:dataproc.gke.agent.google-service-account=${DP_GSA}" \
   --properties="dataproc:dataproc.gke.spark.driver.google-service-account=${DP_GSA}" \
   --properties="dataproc:dataproc.gke.spark.executor.google-service-account=${DP_GSA}" \
